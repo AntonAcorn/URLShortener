@@ -1,14 +1,17 @@
 package ru.acorn.UrlShortener.controllers;
 
 import org.modelmapper.ModelMapper;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import ru.acorn.UrlShortener.dto.UrlDto;
 import ru.acorn.UrlShortener.modells.Url;
 import ru.acorn.UrlShortener.services.EncoderService;
 import ru.acorn.UrlShortener.services.UrlService;
+
+import java.net.URI;
+import java.net.http.HttpResponse;
 
 @RestController
 @RequestMapping
@@ -28,6 +31,8 @@ public class UrlController {
        UrlDto urlToCreate =  convertFromUrl(longUrl);
         return urlService.convertShortUrl(urlToCreate);
     }
+
+
 
 
 

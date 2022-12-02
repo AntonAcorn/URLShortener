@@ -19,7 +19,7 @@ public class Url {
     @Column(name = "id")
     private int id;
 
-    @Column(name = "longurl")
+    @Column(name = "long_url")
     private String longUrl;
 
     @Column (name = "created_date")
@@ -28,4 +28,6 @@ public class Url {
     @Column (name = "expires_date")
     private LocalDateTime expirationDate;
 
+    @Column(name = "short_url")
+    private String shortUrl;
 }
