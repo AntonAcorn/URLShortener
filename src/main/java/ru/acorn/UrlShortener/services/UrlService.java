@@ -3,6 +3,7 @@ package ru.acorn.UrlShortener.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.acorn.UrlShortener.dto.UrlDto;
 import ru.acorn.UrlShortener.modells.Url;
 import ru.acorn.UrlShortener.repositories.UrlRepository;
 
@@ -21,13 +22,16 @@ public class UrlService{
     }
 
     @Transactional
-    public String convertShortUrl (Url url){
-        url.setLongUrl(url.getLongUrl());
-        url.setCreationTime(LocalDateTime.now());
-        url.setExpirationDate(LocalDateTime.now().plusHours(2));
+    public String convertShortUrl (UrlDto urlDto){
+        String convertedUrl = encoderService.encode(Long.parseLong(urlDto.getLongUrl()));
+        Url urlToPersist = new Url();
 
-        Url urlToConvert = urlRepository.save(url);
+        urlToPersist.setLongUrl(urlDto.getLongUrl());
+        urlToPersist.setCreationTime(LocalDateTime.now());
+        urlToPersist.setExpirationDate(LocalDateTime.now().plusHours(2));
 
-        return encoderService.encodeUrl(String.valueOf(urlToConvert));
+        urlRepository.save(urlToPersist);
+
+        return convertedUrl;
     }
 }

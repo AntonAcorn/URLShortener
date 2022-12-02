@@ -25,13 +25,16 @@ public class UrlController {
 
     @PostMapping("/create")
     public String createShortUrl(@RequestBody Url longUrl) {
-        urlService.convertShortUrl(longUrl);
-        System.out.println(longUrl.getLongUrl());
-        return longUrl.getLongUrl();
-
+       UrlDto urlToCreate =  convertFromUrl(longUrl);
+        return urlService.convertShortUrl(urlToCreate);
     }
+
+
 
     private Url convertFromUrlDto(UrlDto urlDto) {
         return modelMapper.map(urlDto, Url.class);
+    }
+    private UrlDto convertFromUrl(Url url){
+        return modelMapper.map(url, UrlDto.class);
     }
 }

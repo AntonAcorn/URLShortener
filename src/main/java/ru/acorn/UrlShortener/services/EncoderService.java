@@ -12,15 +12,15 @@ public class EncoderService {
     private char[] allowedCharacters = allowedString.toCharArray();
     private int base = allowedCharacters.length;
 
-    //    public String encode(long number){
-//        StringBuilder encodedString = new StringBuilder();
-//        while (number > 0){
-//            encodedString.append(allowedCharacters[(int)number % base]);
-//            number = number / base;
-//
-//        }
-//        return encodedString.reverse().toString();
-//    }
+        public String encode(long number){
+        StringBuilder encodedString = new StringBuilder();
+        while (number > 0){
+            encodedString.append(allowedCharacters[(int)number % base]);
+            number = number / base;
+
+        }
+        return encodedString.reverse().toString();
+    }
     public String encodeUrl(String url)
     {
         String encodedUrl = "";
