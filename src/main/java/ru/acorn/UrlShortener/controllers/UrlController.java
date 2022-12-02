@@ -1,5 +1,6 @@
 package ru.acorn.UrlShortener.controllers;
 
+import jakarta.servlet.http.HttpServletResponse;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
@@ -10,6 +11,7 @@ import ru.acorn.UrlShortener.modells.Url;
 import ru.acorn.UrlShortener.services.EncoderService;
 import ru.acorn.UrlShortener.services.UrlService;
 
+import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpResponse;
 
@@ -30,6 +32,14 @@ public class UrlController {
     public String createShortUrl(@RequestBody Url longUrl) {
        UrlDto urlToCreate =  convertFromUrl(longUrl);
         return urlService.convertShortUrl(urlToCreate);
+    }
+
+    @GetMapping("/{shortUrl}")
+    public ResponseEntity<HttpStatus> redirect(@PathVariable String shortUrl, HttpServletResponse response) throws IOException {
+        Url url = urlService.findByShortUrl(shortUrl);
+        System.out.println(shortUrl);
+    response.sendRedirect(url.getLongUrl());
+    return ResponseEntity.ok(HttpStatus.FOUND);
     }
 
 

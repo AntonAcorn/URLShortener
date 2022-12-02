@@ -6,8 +6,11 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.acorn.UrlShortener.dto.UrlDto;
 import ru.acorn.UrlShortener.modells.Url;
 import ru.acorn.UrlShortener.repositories.UrlRepository;
+import ru.acorn.UrlShortener.util.UrlNotFoundException;
 
+import javax.swing.text.html.Option;
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 
 @Service
@@ -24,15 +27,24 @@ public class UrlService{
 
     @Transactional
     public String convertShortUrl (UrlDto urlDto){
-        String convertedUrl = encoderService.encode(Long.parseLong(urlDto.getLongUrl()));
+        String shortUrl = encoderService.encodeUrl(urlDto.getLongUrl());
         Url urlToPersist = new Url();
 
         urlToPersist.setLongUrl(urlDto.getLongUrl());
         urlToPersist.setCreationTime(LocalDateTime.now());
         urlToPersist.setExpirationDate(LocalDateTime.now().plusHours(2));
+        urlToPersist.setShortUrl(shortUrl);
 
         urlRepository.save(urlToPersist);
 
-        return convertedUrl;
+        return shortUrl;
+    }
+
+    public Url findByShortUrl(String shortUrl){
+        return urlRepository.findByShortUrl(shortUrl).orElseThrow(()-> new UrlNotFoundException("ShortUrl is not found"));
+    }
+
+    public Optional <Url> findByLongUrl (String longUrl){
+       return urlRepository.findByLongUrl(longUrl);
     }
 }

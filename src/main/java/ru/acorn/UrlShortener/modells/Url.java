@@ -1,6 +1,7 @@
 package ru.acorn.UrlShortener.modells;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
 import org.hibernate.Hibernate;
 
@@ -9,8 +10,7 @@ import java.util.Objects;
 
 @Entity
 @Table (name = "url")
-@Getter
-@Setter
+@Getter @Setter
 @ToString
 @NoArgsConstructor
 public class Url {
@@ -20,6 +20,7 @@ public class Url {
     private int id;
 
     @Column(name = "long_url")
+    @NotEmpty(message = "Url should not be empty")
     private String longUrl;
 
     @Column (name = "created_date")
