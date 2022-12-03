@@ -1,4 +1,4 @@
-package ru.acorn.UrlShortener.util;
+package ru.acorn.UrlShortener.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
