@@ -6,6 +6,8 @@ import org.springframework.validation.Validator;
 import ru.acorn.UrlShortener.modells.Url;
 import ru.acorn.UrlShortener.services.UrlService;
 
+import java.time.LocalDateTime;
+
 @Component
 public class UrlValidator implements Validator {
     private final UrlService urlService;
@@ -25,7 +27,9 @@ public class UrlValidator implements Validator {
         if (urlService.findByLongUrl(url.getLongUrl()).isPresent()){
             errors.rejectValue("longUrl", "400", "Url is already exists");
         }
-
-
+        if(url.getExpirationDate() == null) return;
+        if (url.getExpirationDate().isBefore(LocalDateTime.now())){
+            errors.rejectValue("expirationDate", "", "Short Url is expired, try to refresh it");
+        }
     }
 }

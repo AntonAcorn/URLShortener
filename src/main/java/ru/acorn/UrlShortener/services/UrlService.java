@@ -1,6 +1,5 @@
 package ru.acorn.UrlShortener.services;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.acorn.UrlShortener.dto.UrlDto;
@@ -8,7 +7,6 @@ import ru.acorn.UrlShortener.modells.Url;
 import ru.acorn.UrlShortener.repositories.UrlRepository;
 import ru.acorn.UrlShortener.util.UrlNotFoundException;
 
-import javax.swing.text.html.Option;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
@@ -32,7 +30,7 @@ public class UrlService{
 
         urlToPersist.setLongUrl(urlDto.getLongUrl());
         urlToPersist.setCreationTime(LocalDateTime.now());
-        urlToPersist.setExpirationDate(LocalDateTime.now().plusHours(2));
+        urlToPersist.setExpirationDate(LocalDateTime.now().plusSeconds(60));
         urlToPersist.setShortUrl(shortUrl);
 
         urlRepository.save(urlToPersist);
@@ -46,5 +44,18 @@ public class UrlService{
 
     public Optional <Url> findByLongUrl (String longUrl){
        return urlRepository.findByLongUrl(longUrl);
+    }
+
+    public LocalDateTime getExpirationDate (Optional <LocalDateTime> creationDate, LocalDateTime expirationDate){
+
+        if (creationDate.isEmpty()){
+           return expirationDate.plusSeconds(60);
+        }
+        return expirationDate;
+    }
+
+    @Transactional
+    public void deleteUrl(Url url){
+        urlRepository.delete(url);
     }
 }
