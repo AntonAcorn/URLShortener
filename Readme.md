@@ -31,7 +31,7 @@ POST /create
 If placed on port 7070, the request will look like:
 **localhost:7070/create**
 
-[Скрин](https://github.com/AntonAcorn/Resources/blob/main/files/URLShortener/img.png)
+[Screenshot](https://github.com/AntonAcorn/Resources/blob/main/files/URLShortener/img.png)
 
 GET /{shortUrl}
 
