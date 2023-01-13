@@ -6,7 +6,7 @@ such as making links more shareable on social media, or for tracking clicks
 on a specific link. It is a simple and efficient solution that can help to streamline 
 the process of sharing and managing links.
 
-### Использованные технологии
+### Technology stack
 * Java 17
 * Spring Boot
 * Maven
@@ -25,7 +25,6 @@ the process of sharing and managing links.
 * To stop application use stop.sh
 
 ## Endpoints
-### Возвращает максимальное число
 POST /create
 
 If placed on port 7070, the request will look like:
