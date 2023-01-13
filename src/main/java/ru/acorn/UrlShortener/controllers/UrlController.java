@@ -1,6 +1,7 @@
 package ru.acorn.UrlShortener.controllers;
 
 import jakarta.validation.Valid;
+import lombok.extern.log4j.Log4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
@@ -19,6 +20,7 @@ import java.time.LocalDateTime;
 
 @RestController
 @RequestMapping
+@Log4j
 public class UrlController {
     private final EncoderService encoderService;
     private final UrlService urlService;
@@ -38,12 +40,14 @@ public class UrlController {
     public ResponseEntity<UrlShortLinkWrapper> createShortUrl(@RequestBody @Valid Url longUrl, BindingResult bindingResult) {
         urlValidator.validate(longUrl, bindingResult);
         if(bindingResult.hasErrors()){
+            log.error("URL has some errors");
             ErrorsUtil.returnErrorMessage(bindingResult);
         }
 
         UrlDto urlToCreate = convertFromUrl(longUrl);
         String shortUrl = urlService.convertShortUrl(urlToCreate);
         UrlShortLinkWrapper urlShortLinkWrapper = new UrlShortLinkWrapper(shortUrl);
+        log.info("Creating of short URL is successful");
         return new ResponseEntity<>(urlShortLinkWrapper, HttpStatus.OK);
     }
 
@@ -56,7 +60,6 @@ public class UrlController {
             urlService.deleteUrl(url);
             return new ResponseEntity <>(urlErrorResponse, HttpStatus.BAD_REQUEST);
         }
-
         return ResponseEntity.status(HttpStatus.FOUND).location(URI.create(url.getLongUrl())).build();
     }
 
@@ -65,7 +68,6 @@ public class UrlController {
         UrlErrorResponse urlErrorResponse = new UrlErrorResponse(e.getMessage(), LocalDateTime.now());
         return new ResponseEntity<>(urlErrorResponse, HttpStatus.BAD_REQUEST);
     }
-
 
     private Url convertFromUrlDto(UrlDto urlDto) {
         return modelMapper.map(urlDto, Url.class);

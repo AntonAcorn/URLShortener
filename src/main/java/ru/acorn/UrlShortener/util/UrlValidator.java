@@ -24,12 +24,16 @@ public class UrlValidator implements Validator {
     @Override
     public void validate(Object target, Errors errors) {
         Url url = (Url) target;
+        var longUrl = urlService.findByLongUrl(url.getLongUrl()).get();
+        var shortUrl = longUrl.getShortUrl();
         if (urlService.findByLongUrl(url.getLongUrl()).isPresent()){
-            errors.rejectValue("longUrl", "400", "Url is already exists");
+            errors.rejectValue("longUrl", "400", "Short url is already exists: "
+                    + shortUrl);
         }
         if(url.getExpirationDate() == null) return;
         if (url.getExpirationDate().isBefore(LocalDateTime.now())){
-            errors.rejectValue("expirationDate", "", "Short Url is expired, try to refresh it");
+            errors.rejectValue("expirationDate", "",
+                    "Short Url is expired, try to refresh it");
         }
     }
 }
