@@ -19,12 +19,6 @@ the process of sharing and managing links.
 * Log4j
 
 ## How to run
-### Github
-* You should have docker
-* Перейдя в папку проекта прописать команду
-mvn spring-boot:run
-
-### Docker
 * Clone repository
 * You should have docker and maven
 * Just use start.sh
