@@ -25,21 +25,19 @@ the process of sharing and managing links.
 mvn spring-boot:run
 
 ### Docker
-* Клонировать репозиторий
-* Перейдя в папку проекта прописать команду
-mvn clean install
-* Собрать докер-образ с произвольным именем, в нашем случае seq-image
-docker image build ./ -t seq-image
-* Запустить контейнер с образом
-docker run -p 8080:8080 -d --name seq-service seq-image
+* Clone repository
+* You should have docker and maven
+* Just use start.sh
+* To stop application use stop.sh
 
 ## Endpoints
 ### Возвращает максимальное число
-POST /max
+POST /create
 
-В случае размещения на порте 8080, запрос будет выглядеть:
+If placed on port 7070, the request will look like:
+**localhost:7070/create**
 
-**localhost:8080/max**
+![Image alt](https://github.com/AntonAcorn/Resources/raw/main/Resources/files/URLShortener/img.png)
 
 //TODO
 
