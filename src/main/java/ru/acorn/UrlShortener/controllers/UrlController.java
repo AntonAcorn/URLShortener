@@ -40,8 +40,8 @@ public class UrlController {
     public ResponseEntity<UrlShortLinkWrapper> createShortUrl(@RequestBody @Valid Url longUrl, BindingResult bindingResult) {
         urlValidator.validate(longUrl, bindingResult);
         if(bindingResult.hasErrors()){
-            log.error("URL has some errors");
             ErrorsUtil.returnErrorMessage(bindingResult);
+            log.error("URL has some errors");
         }
 
         UrlDto urlToCreate = convertFromUrl(longUrl);
