@@ -24,11 +24,8 @@ public class UrlValidator implements Validator {
     @Override
     public void validate(Object target, Errors errors) {
         Url url = (Url) target;
-        var longUrl = urlService.findByLongUrl(url.getLongUrl()).get();
-        var shortUrl = longUrl.getShortUrl();
         if (urlService.findByLongUrl(url.getLongUrl()).isPresent()){
-            errors.rejectValue("longUrl", "400", "Short url is already exists: "
-                    + shortUrl);
+            errors.rejectValue("longUrl", "400", "Short url is already exists");
         }
         if(url.getExpirationDate() == null) return;
         if (url.getExpirationDate().isBefore(LocalDateTime.now())){

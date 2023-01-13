@@ -11,4 +11,6 @@ mvn package
 docker-compose stop
 #
 ## Start new deployment
+
 docker-compose up --build -d
+mvn spring-boot:run
