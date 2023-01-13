@@ -37,9 +37,15 @@ POST /create
 If placed on port 7070, the request will look like:
 **localhost:7070/create**
 
-![Image alt](https://github.com/AntonAcorn/Resources/raw/main/Resources/files/URLShortener/img.png)
+[Скрин](https://github.com/AntonAcorn/Resources/blob/main/files/URLShortener/img.png)
 
-//TODO
+GET /{shortUrl}
+
+If placed on port 7070, the request will look like:
+**localhost:7070/create**
+
+The link has a certain storage time. If the time is running out, 
+then you need to update the link, i.e. make a new POST request
 
 
 
